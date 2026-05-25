@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.shopHome-navbar {
+    width: 25vw;
+    height: 100vh;
+    background-color: #202E47;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    gap: 10px;
+    cursor: default;
+}
+
+.shopHome-header {
+    margin: 8vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shopHome-logo-title {
+    font-weight: 600;
+    color: white;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.profile,
+.invoice,
+.buyer,
+.logout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    gap: 20px;
+    cursor: pointer;
+    width: 80%;           
+    padding: 12px 20px;    
+    border-radius: 8px;   
+    transition: all 0.3s ease;
+}
+.profile:hover,
+.invoice:hover,
+.buyer:hover,
+.logout:hover {
+    opacity: 0.8;
+}
+
+.active-link {
+    background-color: rgba(255, 255, 255, 0.15); 
+    color: #ffffff;
+}
+
+.main-content {
+    margin-top: 0px;
+    margin-left: 25vw; 
+    overflow-y: auto;
+    scrollbar-width: none;
+    background-color: white;
+    left: 0;
+}
+
+.main-content::-webkit-scrollbar {
+  display: none;
+}
+

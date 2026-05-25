@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.header {
+    background-color: #EE4D2D;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 12vh;
+    position: fixed;
+    z-index: 999999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 80px;
+}
+
+/* Logo Styles */
+.header__logo-link {
+    text-decoration: none; 
+}
+
+.header__logo-img {
+    width: 35px;
+    height: 35px;
+}
+
+.header__logo-title {
+    font-family: "Ultra", serif;
+    font-weight: 600;
+    color: white;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+/* Search Styles */
+.header__search {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.header__search-input {
+    background-color: white;
+    width: 500px;
+    padding: 10px 45px 10px 20px; 
+    border: 2px solid transparent;
+    outline: none;
+    border-radius: 30px;
+}
+
+.header__search-icon {
+    color: black;
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/* Actions Styles */
+.header__actions {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+
+.header__action-link {
+    color: inherit; 
+    text-decoration: none; 
+}
+
+.header__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: text-shadow 0.2s;
+}
+
+.header__icon:hover {
+    text-shadow: 4px 4px 20px rgba(255, 255, 255, 0.7);
+}
+
+/* Tooltip & Dropdowns */
+.header__tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.header__tooltip-text {
+    visibility: hidden;
+    width: max-content;
+    background-color: rgba(255, 255, 255, 0.516);
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 140%;         
+    padding: 4px 8px; 
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.header__tooltip-container:hover .header__tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Notifications Panel */
+.header__notifications {
+    visibility: hidden; 
+    opacity: 0;
+    position: absolute;
+    top: 150%; 
+    left: 50%;
+    transform: translateX(-50%); 
+    width: 320px; 
+    background-color: #fef9f2;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+    transition: opacity 0.2s, visibility 0.2s;
+    z-index: 1000; 
+    font-family: Arial, sans-serif; 
+    color: #333; 
+}
+
+.header__tooltip-container:hover .header__notifications {
+    visibility: visible;
+    opacity: 1;
+}
+
+.header__notifications-header {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    text-align: center;
+    margin-bottom: 10px;
+    font-style: italic;
+    cursor: default;
+}
+
+.header__notifications-scroll {
+    max-height: 320px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.header__notifications-item {
+    background-color: #ffffff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    height: 40px; 
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 13px;
+    color: #444;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.header__notifications-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* ===== NOTIFICATION CARD ===== */
+
+.notify-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #fff;
+    height: auto;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.notify-card--unread {
+    background: bisque;
+}
+
+.notify-card:hover {
+    background: #ededed;
+}
+
+/* Title */
+.notify-card__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ee4d2d;
+    line-height: 1.4;
+}
+
+/* Content */
+.notify-card__content {
+    font-size: 13px;
+    color: #333;
+    line-height: 1.5;
+
+    word-break: break-word;
+    white-space: normal;
+}
+
+/* Date */
+.notify-card__date {
+    font-size: 11px;
+    color: #999;
+    line-height: 1.3;
+}
+
+/* Empty notification */
+.notify-empty {
+    text-align: center;
+    color: #888;
+    padding: 14px;
+    font-size: 13px;
+}

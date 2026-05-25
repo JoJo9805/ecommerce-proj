@@ -1,0 +1,283 @@
+USE master;
+GO
+ALTER DATABASE ecommerce_db SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+DROP DATABASE ecommerce_db;
+GO
+CREATE DATABASE ecommerce_db;
+GO
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'ecommerce_db')
+BEGIN
+   CREATE DATABASE ecommerce_db;
+END
+GO
+
+USE ecommerce_db;
+GO
+
+CREATE TABLE Users (
+                       UserID INT IDENTITY(1,1) PRIMARY KEY,
+                       FullName NVARCHAR(100) NOT NULL,
+                       Email NVARCHAR(100) UNIQUE NOT NULL,
+                       PasswordHash NVARCHAR(255) NOT NULL,
+                       Phone NVARCHAR(20),
+                       Birthday DATE,
+                       Gender NVARCHAR(10),
+                       FollowerCount INT DEFAULT 0,
+                       Status NVARCHAR(20) DEFAULT 'Active',
+                       LastLoginDate DATETIME,
+                       CreatedAt DATETIME DEFAULT GETDATE(),
+                       UpdatedAt DATETIME DEFAULT GETDATE(),
+                       DeletedAt DATETIME NULL
+);
+
+CREATE TABLE Roles (
+                       RoleID INT IDENTITY(1,1) PRIMARY KEY,
+                       RoleName NVARCHAR(50) NOT NULL
+);
+
+CREATE TABLE User_Roles (
+                            UserID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+                            RoleID INT FOREIGN KEY REFERENCES Roles(RoleID) ON DELETE CASCADE,
+                            PRIMARY KEY (UserID, RoleID)
+);
+
+CREATE TABLE Shops (
+                       ShopID INT PRIMARY KEY FOREIGN KEY REFERENCES Users(UserID),
+                       ShopName NVARCHAR(150) NOT NULL,
+                       Description NVARCHAR(MAX),
+                       Rating DECIMAL(3,2) DEFAULT 0.0,
+                       FollowerCount INT DEFAULT 0,
+                       CreatedAt DATETIME DEFAULT GETDATE(),
+                       UpdatedAt DATETIME DEFAULT GETDATE(),
+                       DeletedAt DATETIME NULL
+);
+
+CREATE TABLE Shop_Followers (
+                                UserID INT FOREIGN KEY REFERENCES Users(UserID),
+                                ShopID INT FOREIGN KEY REFERENCES Shops(ShopID),
+                                FollowedAt DATETIME DEFAULT GETDATE(),
+                                PRIMARY KEY (UserID, ShopID)
+);
+
+CREATE TABLE Addresses (
+                           AddressID INT IDENTITY(1,1) PRIMARY KEY,
+                           UserID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+                           ReceiverName NVARCHAR(100),
+                           Phone NVARCHAR(20),
+                           Province NVARCHAR(50),
+                           District NVARCHAR(50),
+                           Ward NVARCHAR(50),
+                           DetailAddress NVARCHAR(255),
+                           IsDefault BIT DEFAULT 0,
+                           CreatedAt DATETIME DEFAULT GETDATE(),
+                           UpdatedAt DATETIME DEFAULT GETDATE(),
+                           DeletedAt DATETIME NULL
+);
+
+CREATE TABLE Categories (
+                            CategoryID INT IDENTITY(1,1) PRIMARY KEY,
+                            CategoryName NVARCHAR(100) NOT NULL,
+                            CreatedAt DATETIME DEFAULT GETDATE(),
+                            UpdatedAt DATETIME DEFAULT GETDATE(),
+                            DeletedAt DATETIME NULL
+);
+
+CREATE TABLE Products (
+                          ProductID INT IDENTITY(1,1) PRIMARY KEY,
+                          ProductName NVARCHAR(200) NOT NULL,
+                          ShopID INT FOREIGN KEY REFERENCES Shops(ShopID),
+                          Brand NVARCHAR(100),
+                          Description NVARCHAR(MAX),
+                          Rating DECIMAL(3,2) DEFAULT 0.0,
+                          CreatedAt DATETIME DEFAULT GETDATE(),
+                          UpdatedAt DATETIME DEFAULT GETDATE(),
+                          DeletedAt DATETIME NULL
+);
+
+CREATE TABLE Product_Categories_Map (
+                                        ProductID INT FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE,
+                                        CategoryID INT FOREIGN KEY REFERENCES Categories(CategoryID) ON DELETE CASCADE,
+                                        PRIMARY KEY (ProductID, CategoryID)
+);
+
+CREATE TABLE Product_Images (
+                                ImageID INT IDENTITY(1,1) PRIMARY KEY,
+                                ProductID INT FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE,
+                                ImageURL NVARCHAR(MAX) NOT NULL,
+                                IsMain BIT DEFAULT 0,
+                                CreatedAt DATETIME DEFAULT GETDATE(),
+                                DeletedAt DATETIME NULL
+);
+
+CREATE TABLE Product_Variants (
+                                  VariantID INT IDENTITY(1,1) PRIMARY KEY,
+                                  ProductID INT FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE,
+                                  Size NVARCHAR(50),
+                                  Color NVARCHAR(50),
+                                  Price DECIMAL(18,2) NOT NULL,
+                                  StockQuantity INT DEFAULT 0,
+                                  SKU NVARCHAR(100),
+                                  Status NVARCHAR(20) DEFAULT 'Active',
+                                  CreatedAt DATETIME DEFAULT GETDATE(),
+                                  UpdatedAt DATETIME DEFAULT GETDATE(),
+                                  DeletedAt DATETIME NULL
+);
+
+CREATE TABLE Tags (
+                      TagID INT IDENTITY(1,1) PRIMARY KEY,
+                      TagName NVARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Product_Tag_Map (
+                                 ProductID INT FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE,
+                                 TagID INT FOREIGN KEY REFERENCES Tags(TagID) ON DELETE CASCADE,
+                                 PRIMARY KEY (ProductID, TagID)
+);
+
+CREATE TABLE Carts (
+                       CartID INT IDENTITY(1,1) PRIMARY KEY,
+                       UserID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE
+);
+
+CREATE TABLE Cart_Items (
+                            CartItemID INT IDENTITY(1,1) PRIMARY KEY,
+                            CartID INT FOREIGN KEY REFERENCES Carts(CartID) ON DELETE CASCADE,
+                            VariantID INT FOREIGN KEY REFERENCES Product_Variants(VariantID) ON DELETE CASCADE,
+                            Quantity INT DEFAULT 1
+);
+
+CREATE TABLE Orders (
+                        OrderID INT IDENTITY(1,1) PRIMARY KEY,
+                        BuyerID INT FOREIGN KEY REFERENCES Users(UserID),
+                        ShopID INT FOREIGN KEY REFERENCES Shops(ShopID),
+                        AddressID INT FOREIGN KEY REFERENCES Addresses(AddressID),
+                        OrderDate DATETIME DEFAULT GETDATE(),
+                        TotalAmount DECIMAL(18,2),
+                        PaymentStatus NVARCHAR(50) DEFAULT 'Unpaid',
+                        ShippingStatus NVARCHAR(50) DEFAULT 'Pending',
+                        CreatedAt DATETIME DEFAULT GETDATE(),
+                        UpdatedAt DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Order_Items (
+                             OrderItemID INT IDENTITY(1,1) PRIMARY KEY,
+                             OrderID INT FOREIGN KEY REFERENCES Orders(OrderID) ON DELETE CASCADE,
+                             VariantID INT FOREIGN KEY REFERENCES Product_Variants(VariantID),
+                             Quantity INT NOT NULL,
+                             Price DECIMAL(18,2) NOT NULL
+);
+
+CREATE TABLE Payment_Methods (
+                                 PaymentID INT IDENTITY(1,1) PRIMARY KEY,
+                                 OrderID INT FOREIGN KEY REFERENCES Orders(OrderID) ON DELETE CASCADE,
+                                 Method NVARCHAR(50) NOT NULL,
+                                 PaymentDate DATETIME,
+                                 Amount DECIMAL(18,2) NOT NULL
+);
+
+CREATE TABLE Shipping_Units (
+                                ShipmentID INT IDENTITY(1,1) PRIMARY KEY,
+                                OrderID INT FOREIGN KEY REFERENCES Orders(OrderID) ON DELETE CASCADE,
+                                ShippingMethod NVARCHAR(100),
+                                ShippingFee DECIMAL(18,2) DEFAULT 0.0,
+                                TrackingNumber NVARCHAR(100),
+                                ShippedDate DATETIME,
+                                DeliveryDate DATETIME
+);
+
+CREATE TABLE Vouchers (
+                          VoucherID INT IDENTITY(1,1) PRIMARY KEY,
+                          VoucherCode VARCHAR(50) UNIQUE NOT NULL,
+                          ShopID INT NULL,
+                          VoucherType VARCHAR(20) CHECK (VoucherType IN ('Shop', 'Platform', 'Shipping')),
+                          DiscountValue DECIMAL(5, 1),
+                          StartDate DATETIME,
+                          EndDate DATETIME,
+                          Status VARCHAR(20) DEFAULT 'Active',
+                          UpdatedAt DATETIME,
+                          DeletedAt DATETIME NULL,
+                          CreatedAt DATETIME DEFAULT GETDATE(),
+                          CONSTRAINT FK_Vouchers_Shops FOREIGN KEY (ShopID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Order_Voucher (
+                               OrderID INT FOREIGN KEY REFERENCES Orders(OrderID) ON DELETE CASCADE,
+                               VoucherID INT FOREIGN KEY REFERENCES Vouchers(VoucherID) ON DELETE CASCADE,
+                               PRIMARY KEY (OrderID, VoucherID)
+);
+
+CREATE TABLE User_Vouchers (
+                               ID INT IDENTITY(1,1) PRIMARY KEY,
+                               UserID INT NOT NULL,
+                               VoucherID INT NOT NULL,
+                               IsUsed BIT DEFAULT 0,
+                               SavedAt DATETIME DEFAULT GETDATE(),
+                               CONSTRAINT FK_UserVouchers_Users FOREIGN KEY (UserID) REFERENCES Users(UserID),
+                               CONSTRAINT FK_UserVouchers_Vouchers FOREIGN KEY (VoucherID) REFERENCES Vouchers(VoucherID) ON DELETE CASCADE,
+                               CONSTRAINT UQ_User_Voucher UNIQUE (UserID, VoucherID)
+);
+
+CREATE TABLE Reviews (
+                         ReviewID INT IDENTITY(1,1) PRIMARY KEY,
+                         ProductID INT FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE,
+                         UserID INT FOREIGN KEY REFERENCES Users(UserID),
+                         OrderItemID INT FOREIGN KEY REFERENCES Order_Items(OrderItemID),
+                         Rating INT CHECK (Rating >= 1 AND Rating <= 5),
+                         Comment NVARCHAR(MAX),
+                         ReviewDate DATETIME DEFAULT GETDATE(),
+                         IsFake BIT DEFAULT 0,
+                         UpdatedAt DATETIME DEFAULT GETDATE(),
+                         DeletedAt DATETIME NULL
+);
+
+CREATE TABLE Review_Metas (
+                              ReviewID INT PRIMARY KEY FOREIGN KEY REFERENCES Reviews(ReviewID) ON DELETE CASCADE,
+                              IP_Address NVARCHAR(50),
+                              DeviceID NVARCHAR(100)
+);
+
+CREATE TABLE Review_Reports (
+                                ReportID INT IDENTITY(1,1) PRIMARY KEY,
+                                ReviewID INT FOREIGN KEY REFERENCES Reviews(ReviewID) ON DELETE CASCADE,
+                                ReporterID INT FOREIGN KEY REFERENCES Users(UserID),
+                                Reason NVARCHAR(255),
+                                CreatedAt DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Notifications (
+                               NotificationID INT IDENTITY(1,1) PRIMARY KEY,
+                               SenderID INT FOREIGN KEY REFERENCES Users(UserID) NULL,
+                               ReceiverID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+                               Type NVARCHAR(50),
+                               Title NVARCHAR(200),
+                               Content NVARCHAR(MAX),
+                               RelatedLink NVARCHAR(MAX),
+                               IsRead BIT DEFAULT 0,
+                               CreatedAt DATETIME DEFAULT GETDATE(),
+                               ReadAt DATETIME NULL
+);
+
+CREATE TABLE User_Activities (
+                                 ActivityID INT IDENTITY(1,1) PRIMARY KEY,
+                                 UserID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+                                 ProductID INT FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE,
+                                 ActionType NVARCHAR(50),
+                                 Timestamp DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Search_History (
+                                SearchID INT IDENTITY(1,1) PRIMARY KEY,
+                                UserID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+                                Keyword NVARCHAR(200),
+                                CreatedAt DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE UI_Best_Sellers (ProductID INT PRIMARY KEY FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE);
+CREATE TABLE UI_International (ProductID INT PRIMARY KEY FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE);
+CREATE TABLE UI_Womens_Fashion (ProductID INT PRIMARY KEY FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE);
+CREATE TABLE UI_Mens_Fashion (ProductID INT PRIMARY KEY FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE);
+CREATE TABLE UI_Beauty (ProductID INT PRIMARY KEY FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE);
+CREATE TABLE UI_Electronics (ProductID INT PRIMARY KEY FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE);
+CREATE TABLE UI_Sports (ProductID INT PRIMARY KEY FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE);
+CREATE TABLE UI_Home_Appliances (ProductID INT PRIMARY KEY FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE);
+GO
