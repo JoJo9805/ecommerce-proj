@@ -1,0 +1,472 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.account-container {
+    background-color: #f5f5f5;
+    margin-top: 12vh;
+    width: 100%;
+    height: 88vh;
+    padding: 40px 240px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
+}
+
+.account-sidebar {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    cursor: default;
+}
+
+.user-profile-brief {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid gray;
+    padding: 10px;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.user-profile-brief img {
+    height: 40px;
+    width: 40px;
+    border-radius: 99px;
+}
+
+.user-profile-brief p {
+    font-size: 24px;
+}
+
+.account-sidebar .nav-item {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border: none;
+    background-color: white;
+    font-size: 18px;
+    font-weight: bold;
+    gap: 8px;
+    cursor: pointer;
+    padding-left: 16px;
+    transition: 0.2s;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.account-sidebar .nav-item:hover {
+    background-color: #fdecea;
+    border-radius: 8px;
+}
+
+.account-sidebar .nav-item.active {
+    background-color: #ee4d2d; 
+    color: white; 
+    border-radius: 8px;
+}
+
+.account-main-content {
+    background-color: #e6f2f4;
+    height: 100%;
+    flex: 1;      
+    min-width: 0;
+    border-radius: 20px;
+    padding: 20px 80px;
+    overflow: hidden;
+}
+
+.tab-content-wrapper {
+    height: 100%; 
+    overflow-y: auto; 
+    scrollbar-width: none;
+}
+
+.tab-content-wrapper::-webkit-scrollbar {
+    display: none; 
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    height: 55px;
+    gap: 60px;
+    font-size: 18px;
+}
+
+.info-label {
+    width: 160px;
+    display: flex;
+    justify-content: flex-end;
+    color: gray;
+}
+
+.info-value {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    height: 35px; 
+    width: 300px;
+}
+
+.readonly-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: default;
+    padding: 0;
+    font-size: 18px;
+}
+
+.editing-input {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 4px 10px;
+    cursor: text;
+}
+
+.text-only {
+    cursor: default;
+}
+
+.changeProfile {
+    width: 160px;
+    background-color: #218838;
+    padding: 8px 12px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-right: 100px;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.changeProfile:hover {
+    background-color: #1a6b2c;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: "Sue Ellen Francisco", cursive;
+    width: 100%;
+}
+
+.history-card {
+    width: 100%;
+    height: 100px;
+    border: 1px dashed gray;
+    border-radius: 20px;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    background-color: white;
+}
+
+.item-ordered-info {
+    display: flex;
+    gap: 20px;
+}
+
+.item-ordered-img {
+    height: 80px;
+    width: 60px;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.5);
+}
+
+.text-details h4{
+    max-width: 300px;
+    display: -webkit-box;
+    line-clamp: 2; 
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.status-info {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.item-price {
+    color: #ee4d2d;
+    font-weight: 600;
+}
+
+.badge-status {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    font-size: 16px;
+}
+
+.badge-text {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.modal-overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 25px; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 700px; 
+    max-width: 90%;
+    position: relative; 
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    color: #888;
+    cursor: pointer;
+}
+
+.modal-title {
+    margin-bottom: 20px;
+    color: #ee4d2d;
+    border-bottom: 1px solid gray;
+}
+
+.modal-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; 
+    align-items: stretch;
+}
+
+.modal-col {
+    width: 48%; 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.data-field {
+    border: 1px solid #eee; 
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 15px;
+    color: #333;           
+}
+
+.data-field.field-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    padding: 20px; 
+}
+
+.confirm-btn {
+    margin-top: 10px;
+    background-color: #218838; 
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.confirm-btn:hover {
+    background-color: #1a6b2c;
+}
+
+.review-btn {
+    margin-top: 10px;
+    background-color: #ee4d2d;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.review-btn:hover {
+    background-color: #d73211;
+}
+
+.review-modal {
+    width: 500px;
+}
+
+.rating-input {
+    margin-bottom: 15px;
+}
+
+.rating-input select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+}
+
+.review-field {
+    height: 96px; 
+    overflow-y: auto; 
+    word-break: break-word;
+}
+
+.review-field::-webkit-scrollbar {
+    display: none;
+}
+
+.review-textarea {
+    width: 100%;
+    height: 120px;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    resize: none;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.review-textarea::-webkit-scrollbar {
+    display: none;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.submit-btn {
+    background-color: #ee4d2d;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background-color: #eee;
+    color: #333;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.seller-register-container{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f5f5;
+    padding: 40px;
+}
+
+.seller-register-box{
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background: white;
+    padding: 40px;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    cursor: default;
+}
+
+.seller-register-box h1{
+    margin-bottom: 18px;
+    color: #ee4d2d;
+}
+
+.welcome-seller {
+    font-size: 16px;
+    color: gray;
+    margin-bottom: 20px;
+}
+
+.benefits{
+    text-align: left;
+    margin-bottom: 20px;
+    line-height: 2;
+}
+
+.sug-seller {
+    color: #218838;
+    margin-bottom: 20px;
+}
+
+.register-shop-btn{
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #ee4d2d;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.register-shop-btn:hover{
+    background: #d73211;
+}
+
+.seller-login-text{
+    margin-top: 20px;
+    color: #666;
+}
+
+.seller-login-text span{
+    color: #ee4d2d;
+    cursor: pointer;
+    font-weight: 600;
+}

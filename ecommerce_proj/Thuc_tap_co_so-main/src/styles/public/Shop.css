@@ -1,0 +1,334 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.shop-container {
+    background-color: #f5f5f5;
+    margin-top: 12vh;
+    width: 100%;
+    height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    
+}
+
+.shop-container::-webkit-scrollbar {
+  display: none;
+}
+
+.shop-header {
+    margin: 0 200px;
+    margin-bottom: 20px;
+    height: 300px !important; 
+    flex-shrink: 0;
+    background-image: url('../../pages/public/assets/bia-shop.jpg');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shop-info {
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    width: 85%;
+    height: 60%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px;
+}
+
+.info-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 2;
+    cursor: default;
+}
+
+.shop-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2d6a4f;
+}
+
+.shop-details h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.rating {
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.rating-score {
+    color: #666;
+    margin-left: 5px;
+}
+
+.description {
+    font-size: 13px;
+    color: #555;
+    max-width: 400px;
+    line-height: 1.4;
+}
+
+.info-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 25px;
+}
+
+.btn-follow {
+    padding: 8px 30px;
+    border-radius: 8px;
+    border: none;
+    background-color: #ee4d2d;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-follow:hover {
+    background-color: orangered;
+    box-shadow: 0 2px 8px rgba(255, 126, 95, 0.5);
+}
+
+.btn-follow.followed {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.stats {
+    display: flex;
+    gap: 30px;
+    text-align: center;
+    cursor: default;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-item strong {
+    font-size: 18px;
+    color: #333;
+}
+
+.stat-item span {
+    font-size: 12px;
+    color: #777;
+}
+
+.shop-main-content {
+    margin: 0 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-main-content h3 {
+    margin-bottom: 10px;
+    cursor: default;
+}
+
+.voucher-list {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 20px;
+    height: 140px;
+}
+
+.voucher-card {
+    display: flex;
+    width: 280px;
+    flex-shrink: 0;
+    height: 120px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.voucher-left {
+    flex: 3;
+    background-color: #fff1f1; 
+    position: relative;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px 0 0 4px;
+    cursor: default;
+}
+
+.v-discount {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.v-target span {
+    font-size: 12px;
+    color: #ee4d2d;
+    border: 1px solid #ee4d2d;
+    padding: 0 4px;
+    display: inline-block;
+    margin: 5px 0;
+}
+
+.v-expiry {
+    font-size: 12px;
+    color: #757575;
+}
+
+.voucher-right {
+    flex: 1;
+    background-color: #fff1f1;
+    border-left: 1px dashed #ddd; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 4px 4px 0;
+    padding: 0 10px;
+}
+
+.btn-save {
+    width: 80px; 
+    height: 36px;
+    background-color: #ee4d2d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-save:hover {
+    background-color: orangered;
+    box-shadow: 0 2px 8px rgba(255, 126, 95, 0.5);
+}
+
+.btn-save.saved {
+    background-color: white;
+    color: #ee4d2d;
+    border: 1px solid #ee4d2d;
+}
+
+.voucher-card.disabled {
+    opacity: 0.6;
+    filter: grayscale(1);
+}
+
+.btn-save:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Phần sản phẩm */
+.shop-item {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+    gap: 20px; 
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.each-product {
+    width: 180px; 
+    height: 350px;
+    background-color: white;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.each-product:hover {
+    transform: translateY(-8px);
+}
+
+.shop-product-img {
+    width: 160px; 
+    height: 240px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.shop-product-name {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;      
+    overflow: hidden;          
+    text-overflow: ellipsis;  
+}
+
+.rating {
+    font-size: 12px;
+    color: #F1C40F; 
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.shop-product-sold {
+    color: #555;
+    font-size: 12px;
+}
+
+.shop-product-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shop-product-price {
+    color: orangered;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.shop-product-btn {
+    margin-top: 0;
+    background-color: orange;
+    font-size: 13px;
+    font-weight: bold;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.each-product:hover .shop-product-img {
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
+.product-footer {
+    text-align: center;
+    color: gray;
+    margin-bottom: 30px;
+}

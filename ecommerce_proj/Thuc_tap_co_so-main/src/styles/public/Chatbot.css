@@ -1,0 +1,121 @@
+.chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+}
+
+.chatbot-toggle-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #EE4D2D;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbot-window {
+  width: 350px;
+  height: 450px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e8e8e8;
+}
+
+.chatbot-header {
+  background-color: #EE4D2D;
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatbot-title {
+  font-weight: bold;
+}
+
+.chatbot-close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.chatbot-messages-area {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chatbot-message {
+  padding: 10px 14px;
+  border-radius: 8px;
+  max-width: 75%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.chatbot-message.user {
+  align-self: flex-end;
+  background-color: #EE4D2D;
+  color: #fff;
+}
+
+.chatbot-message.bot {
+  align-self: flex-start;
+  background-color: #fff;
+  color: #333;
+}
+
+.chatbot-loading {
+  align-self: flex-start;
+  background-color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #999;
+  font-size: 13px;
+}
+
+.chatbot-input-area {
+  padding: 10px;
+  border-top: 1px solid #e8e8e8;
+  display: flex;
+  gap: 5px;
+  background-color: #fff;
+}
+
+.chatbot-input-field {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  outline: none;
+}
+
+.chatbot-send-btn {
+  background-color: #EE4D2D;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
